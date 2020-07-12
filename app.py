@@ -10,7 +10,7 @@ from flask import Flask,jsonify
 
 
 #Create sqlite dB engine
-engine = create_engine("sqlite:///hawaii.sqlite")
+engine = create_engine("sqlite:///hawaii.sqlite?check_same_thread=False")
 
 #Map the base of the dB
 Base = automap_base()
@@ -73,9 +73,6 @@ def stats(start=None, end=None):
         results = session.query(*sel).filter(Measurement.date <= start).all()
         temps = list(np.ravel(results))
         return jsonify(results)
-	    # results = session.query(*sel).filter(Measurement.date <= start).all()
-        # temps = list(np.ravel(results))
-        # return jsonify(temps)
 
     results = session.query(*sel).\
         filter(Measurement.date >= start).\
